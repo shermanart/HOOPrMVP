@@ -1,15 +1,14 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
-import '../court_added_success/court_added_success_widget.dart';
+import '../court_added_success_copy/court_added_success_copy_widget.dart';
+import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/place.dart';
 import '../flutter_flow/upload_media.dart';
-import 'dart:io';
+import '../main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -23,17 +22,18 @@ class AddCourtWidget extends StatefulWidget {
 }
 
 class _AddCourtWidgetState extends State<AddCourtWidget> {
+  String drillCategoryInputValue;
+  String drillLevelInputValue;
+  TextEditingController drillNameInputController;
+  TextEditingController drillDescriptionInputController;
   String uploadedFileUrl = '';
-  TextEditingController textController1;
-  TextEditingController textController2;
-  var placePickerValue = FFPlace();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
+    drillDescriptionInputController = TextEditingController();
+    drillNameInputController = TextEditingController();
   }
 
   @override
@@ -53,7 +53,12 @@ class _AddCourtWidgetState extends State<AddCourtWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NavBarPage(initialPage: 'findCourt'),
+              ),
+            );
           },
         ),
         title: Text(
@@ -72,46 +77,63 @@ class _AddCourtWidgetState extends State<AddCourtWidget> {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.background,
-                    ),
-                    child: InkWell(
-                      onTap: () async {
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
                         final selectedMedia =
                             await selectMediaWithSourceBottomSheet(
                           context: context,
-                          allowPhoto: true,
-                          backgroundColor: FlutterFlowTheme.secondaryColor,
-                          textColor: FlutterFlowTheme.primaryColor,
-                          pickerFontFamily: 'Overpass',
+                          allowPhoto: false,
+                          allowVideo: true,
                         );
                         if (selectedMedia != null &&
                             validateFileFormat(
                                 selectedMedia.storagePath, context)) {
-                          showUploadMessage(context, 'Uploading file...',
-                              showLoading: true);
+                          showUploadMessage(
+                            context,
+                            'Uploading file...',
+                            showLoading: true,
+                          );
                           final downloadUrl = await uploadData(
                               selectedMedia.storagePath, selectedMedia.bytes);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           if (downloadUrl != null) {
                             setState(() => uploadedFileUrl = downloadUrl);
-                            showUploadMessage(context, 'Success!');
+                            showUploadMessage(
+                              context,
+                              'Success!',
+                            );
                           } else {
                             showUploadMessage(
-                                context, 'Failed to upload media');
+                              context,
+                              'Failed to upload media',
+                            );
                             return;
                           }
                         }
                       },
-                      child: Image.asset(
-                        'assets/images/coverEmpty@3x.png',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+                      text: 'Upload Drill Video',
+                      icon: Icon(
+                        Icons.upload_rounded,
+                        size: 15,
+                      ),
+                      options: FFButtonOptions(
+                        width: 200,
+                        height: 40,
+                        color: FlutterFlowTheme.primaryColor,
+                        textStyle: FlutterFlowTheme.subtitle2.override(
+                          fontFamily: 'Overpass',
+                          color: Colors.white,
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: 12,
                       ),
                     ),
                   ),
@@ -126,23 +148,17 @@ class _AddCourtWidgetState extends State<AddCourtWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                       child: TextFormField(
-                        controller: textController1,
+                        controller: drillNameInputController,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Team Name',
+                          labelText: 'Drill Name',
                           labelStyle: FlutterFlowTheme.title3.override(
                             fontFamily: 'Overpass',
                             color: FlutterFlowTheme.iconGray,
                             fontSize: 18,
                             fontWeight: FontWeight.normal,
                           ),
-                          hintText: 'Court Name...',
-                          hintStyle: FlutterFlowTheme.title3.override(
-                            fontFamily: 'Overpass',
-                            color: FlutterFlowTheme.darkBG,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ),
+                          hintText: 'Drill Name...',
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.grayLines,
@@ -172,10 +188,62 @@ class _AddCourtWidgetState extends State<AddCourtWidget> {
                         ),
                       ),
                     ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FlutterFlowDropDown(
+                          options: [
+                            'Dribbling',
+                            'Shooting',
+                            'Defense',
+                            'Team',
+                            'Other'
+                          ].toList(),
+                          onChanged: (val) =>
+                              setState(() => drillCategoryInputValue = val),
+                          width: 180,
+                          height: 50,
+                          textStyle: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Overpass',
+                            color: Colors.black,
+                          ),
+                          hintText: 'Choose Category..',
+                          fillColor: Colors.white,
+                          elevation: 2,
+                          borderColor: Color(0xFFDBE2E7),
+                          borderWidth: 0,
+                          borderRadius: 10,
+                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                          hidesUnderline: true,
+                        ),
+                        FlutterFlowDropDown(
+                          options:
+                              ['Beginner', 'Intermediate', 'Advanced'].toList(),
+                          onChanged: (val) =>
+                              setState(() => drillLevelInputValue = val),
+                          width: 180,
+                          height: 50,
+                          textStyle: FlutterFlowTheme.bodyText1.override(
+                            fontFamily: 'Overpass',
+                            color: Colors.black,
+                          ),
+                          hintText: 'Choose Skill Level...',
+                          fillColor: Colors.white,
+                          elevation: 2,
+                          borderColor: Color(0xFFDBE2E7),
+                          borderWidth: 0,
+                          borderRadius: 10,
+                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                          hidesUnderline: true,
+                        ),
+                      ],
+                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                       child: TextFormField(
-                        controller: textController2,
+                        controller: drillDescriptionInputController,
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Description',
@@ -184,12 +252,7 @@ class _AddCourtWidgetState extends State<AddCourtWidget> {
                             color: FlutterFlowTheme.iconGray,
                             fontSize: 15,
                           ),
-                          hintText: 'Saturdays at noon',
-                          hintStyle: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Overpass',
-                            color: FlutterFlowTheme.darkBG,
-                            fontSize: 15,
-                          ),
+                          hintText: 'Briefly describe the drill',
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.grayLines,
@@ -220,77 +283,25 @@ class _AddCourtWidgetState extends State<AddCourtWidget> {
                         keyboardType: TextInputType.multiline,
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: FlutterFlowTheme.grayLines,
-                            offset: Offset(0, 0),
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 30),
-                            child: FlutterFlowPlacePicker(
-                              iOSGoogleMapsApiKey: '',
-                              androidGoogleMapsApiKey: '',
-                              webGoogleMapsApiKey:
-                                  'AIzaSyCyA6kZAooomYDgWXoAq28AdFcYBcdhOqs',
-                              onSelect: (place) =>
-                                  setState(() => placePickerValue = place),
-                              defaultText: 'Set Location',
-                              icon: Icon(
-                                Icons.place,
-                                color: FlutterFlowTheme.iconGray,
-                                size: 24,
-                              ),
-                              buttonOptions: FFButtonOptions(
-                                width: 240,
-                                height: 50,
-                                color: FlutterFlowTheme.background,
-                                textStyle: FlutterFlowTheme.title3.override(
-                                  fontFamily: 'Overpass',
-                                  color: FlutterFlowTheme.iconGray,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          final courtsCreateData = createCourtsRecordData(
-                            name: textController1.text,
-                            location: placePickerValue.latLng,
-                            createdAt: getCurrentTimestamp,
-                            user: currentUserReference,
-                            description: textController2.text,
-                            likes: 0,
-                            imageUrl: uploadedFileUrl,
+                          final drillsCreateData = createDrillsRecordData(
+                            category: drillCategoryInputValue,
+                            level: drillLevelInputValue,
+                            name: drillNameInputController.text,
+                            description: drillDescriptionInputController.text,
+                            video: uploadedFileUrl,
                           );
-                          await CourtsRecord.collection
+                          await DrillsRecord.collection
                               .doc()
-                              .set(courtsCreateData);
+                              .set(drillsCreateData);
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CourtAddedSuccessWidget(),
+                              builder: (context) =>
+                                  CourtAddedSuccessCopyWidget(),
                             ),
                           );
                         },
