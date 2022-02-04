@@ -78,50 +78,48 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20, 12, 20, 12),
-                  child: AuthUserStreamWidget(
-                    child: TextFormField(
-                      controller: emailAddressController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        labelStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Lexend Deca',
-                          color: Color(0xFF95A1AC),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        hintText: 'Your email..',
-                        hintStyle: FlutterFlowTheme.bodyText1.override(
-                          fontFamily: 'Lexend Deca',
-                          color: Color(0xFF95A1AC),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xFFDBE2E7),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xFFDBE2E7),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                      ),
-                      style: FlutterFlowTheme.bodyText1.override(
+                  child: TextFormField(
+                    controller: emailAddressController,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'Email Address',
+                      labelStyle: FlutterFlowTheme.bodyText1.override(
                         fontFamily: 'Lexend Deca',
-                        color: Color(0xFF14181B),
+                        color: Color(0xFF95A1AC),
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                       ),
+                      hintText: 'Your email..',
+                      hintStyle: FlutterFlowTheme.bodyText1.override(
+                        fontFamily: 'Lexend Deca',
+                        color: Color(0xFF95A1AC),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFDBE2E7),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFDBE2E7),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+                    ),
+                    style: FlutterFlowTheme.bodyText1.override(
+                      fontFamily: 'Lexend Deca',
+                      color: Color(0xFF14181B),
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ),

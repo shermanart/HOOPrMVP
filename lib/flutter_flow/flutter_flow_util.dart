@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,9 +9,13 @@ import 'package:json_path/json_path.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
+import '../main.dart';
+
 import 'lat_lng.dart';
 
 export 'dart:math' show min, max;
+export 'package:intl/intl.dart';
+export 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference;
 export 'package:page_transition/page_transition.dart';
 export 'lat_lng.dart';
 export 'place.dart';
@@ -130,6 +135,24 @@ dynamic getJsonField(dynamic response, String jsonPath) {
 }
 
 bool get isAndroid => !kIsWeb && Platform.isAndroid;
+bool responsiveVisibility({
+  @required BuildContext context,
+  bool phone = true,
+  bool tablet = true,
+  bool tabletLandscape = true,
+  bool desktop = true,
+}) {
+  final width = MediaQuery.of(context).size.width;
+  if (width < 479) {
+    return phone;
+  } else if (width < 767) {
+    return tablet;
+  } else if (width < 991) {
+    return tabletLandscape;
+  } else {
+    return desktop;
+  }
+}
 
 LatLng cachedUserLocation;
 Future<LatLng> getCurrentUserLocation(
@@ -170,6 +193,13 @@ Future<LatLng> queryCurrentUserLocation() async {
       ? LatLng(position.latitude, position.longitude)
       : null;
 }
+
+extension StringDocRef on String {
+  DocumentReference get ref => FirebaseFirestore.instance.doc(this);
+}
+
+void setAppLanguage(BuildContext context, String language) =>
+    MyApp.of(context).setLocale(Locale(language, ''));
 
 void showSnackbar(
   BuildContext context,

@@ -136,11 +136,6 @@ class _FindCourtWidgetState extends State<FindCourtWidget> {
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       hintText: 'Search for drills...',
-                                      hintStyle:
-                                          FlutterFlowTheme.subtitle2.override(
-                                        fontFamily: 'Overpass',
-                                        color: FlutterFlowTheme.iconGray,
-                                      ),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),

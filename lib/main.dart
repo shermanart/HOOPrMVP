@@ -5,17 +5,23 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'auth/firebase_user_provider.dart';
 import 'auth/auth_util.dart';
 
-import '../flutter_flow/flutter_flow_theme.dart';
+import 'flutter_flow/flutter_flow_theme.dart';
+import 'flutter_flow/internationalization.dart';
 import 'package:h_o_o_pr/login/login_widget.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'nearby_courts/nearby_courts_widget.dart';
 import 'find_court/find_court_widget.dart';
 import 'profile_page/profile_page_widget.dart';
 
+import 'backend/stripe/payment_manager.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  await initializeStripe();
   runApp(MyApp());
 }
 
@@ -23,13 +29,19 @@ class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
+
+  static _MyAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>();
 }
 
 class _MyAppState extends State<MyApp> {
+  Locale _locale;
   Stream<HOOPrFirebaseUser> userStream;
   HOOPrFirebaseUser initialUser;
   bool displaySplashImage = true;
   final authUserSub = authenticatedUserStream.listen((_) {});
+
+  void setLocale(Locale value) => setState(() => _locale = value);
 
   @override
   void initState() {
@@ -52,10 +64,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'HOOPr',
       localizationsDelegates: [
+        FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      locale: _locale,
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(primarySwatch: Colors.blue),
       home: initialUser == null || displaySplashImage
@@ -101,9 +115,18 @@ class _NavBarPageState extends State<NavBarPage> {
       'findCourt': FindCourtWidget(),
       'profilePage': ProfilePageWidget(),
     };
+    final currentIndex = tabs.keys.toList().indexOf(_currentPage);
     return Scaffold(
       body: tabs[_currentPage],
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
+        backgroundColor: FlutterFlowTheme.secondaryColor,
+        selectedItemColor: FlutterFlowTheme.primaryColor,
+        unselectedItemColor: FlutterFlowTheme.iconGray,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
@@ -138,14 +161,6 @@ class _NavBarPageState extends State<NavBarPage> {
             tooltip: '',
           )
         ],
-        backgroundColor: FlutterFlowTheme.secondaryColor,
-        currentIndex: tabs.keys.toList().indexOf(_currentPage),
-        selectedItemColor: FlutterFlowTheme.primaryColor,
-        unselectedItemColor: FlutterFlowTheme.iconGray,
-        onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
       ),
     );
   }

@@ -43,6 +43,10 @@ abstract class CommentsRecord
       .snapshots()
       .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
+  static Future<CommentsRecord> getDocumentOnce(DocumentReference ref) => ref
+      .get()
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+
   CommentsRecord._();
   factory CommentsRecord([void Function(CommentsRecordBuilder) updates]) =
       _$CommentsRecord;

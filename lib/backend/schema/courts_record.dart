@@ -64,6 +64,10 @@ abstract class CourtsRecord
       .snapshots()
       .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
+  static Future<CourtsRecord> getDocumentOnce(DocumentReference ref) => ref
+      .get()
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+
   static CourtsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
       CourtsRecord(
         (c) => c

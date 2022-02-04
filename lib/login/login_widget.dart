@@ -57,18 +57,15 @@ class _LoginWidgetState extends State<LoginWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24, 70, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'HOOPr',
-                      style: FlutterFlowTheme.title1.override(
-                        fontFamily: 'Overpass',
-                        color: Color(0xFFEEEEEE),
-                        fontSize: 50,
-                      ),
+                    Image.asset(
+                      'assets/images/HOOPr-logo-with-glow.png',
+                      height: 100,
+                      fit: BoxFit.cover,
                     ),
                   ],
                 ),

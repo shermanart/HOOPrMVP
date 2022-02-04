@@ -1,4 +1,5 @@
 import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -261,6 +262,24 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   if (user == null) {
                                     return;
                                   }
+
+                                  final usersCreateData = createUsersRecordData(
+                                    email: emailInputController.text,
+                                    displayName:
+                                        displayNameInputController.text,
+                                    photoUrl: uploadedFileUrl,
+                                    uid: '',
+                                    createdTime: getCurrentTimestamp,
+                                    firstName: firstNameInputController.text,
+                                    lastName: lastNameInputController.text,
+                                    dob: datePicked,
+                                    city: cityInputController.text,
+                                    state: stateInputValue,
+                                    bio: bioInputController.text,
+                                  );
+                                  await UsersRecord.collection
+                                      .doc(user.uid)
+                                      .update(usersCreateData);
 
                                   await Navigator.pushAndRemoveUntil(
                                     context,

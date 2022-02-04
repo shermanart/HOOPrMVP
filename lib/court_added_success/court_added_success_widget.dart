@@ -84,7 +84,7 @@ class _CourtAddedSuccessWidgetState extends State<CourtAddedSuccessWidget> {
                       type: PageTransitionType.fade,
                       duration: Duration(milliseconds: 300),
                       reverseDuration: Duration(milliseconds: 300),
-                      child: NavBarPage(initialPage: 'findCourt'),
+                      child: NavBarPage(initialPage: 'nearbyCourts'),
                     ),
                   );
                 },

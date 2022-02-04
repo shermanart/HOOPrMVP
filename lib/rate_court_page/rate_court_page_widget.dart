@@ -80,17 +80,7 @@ class _RateCourtPageWidgetState extends State<RateCourtPageWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Comment',
-                          labelStyle: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Overpass',
-                            color: FlutterFlowTheme.iconGray,
-                            fontSize: 15,
-                          ),
                           hintText: 'Saturdays at noon',
-                          hintStyle: FlutterFlowTheme.bodyText1.override(
-                            fontFamily: 'Overpass',
-                            color: FlutterFlowTheme.iconGray,
-                            fontSize: 15,
-                          ),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.grayLines,
