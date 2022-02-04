@@ -1,4 +1,4 @@
-# h_o_o_pr
+# HOOPr
 
 A new Flutter project.
 

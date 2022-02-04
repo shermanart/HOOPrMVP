@@ -1,6 +1,6 @@
-package com.flutterflow.courts
+package com.flutterflow.hoopr
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity: FlutterActivity() {
+class MainActivity: FlutterFragmentActivity() {
 }

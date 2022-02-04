@@ -113,16 +113,25 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                       if (selectedMedia != null &&
                           validateFileFormat(
                               selectedMedia.storagePath, context)) {
-                        showUploadMessage(context, 'Uploading file...',
-                            showLoading: true);
+                        showUploadMessage(
+                          context,
+                          'Uploading file...',
+                          showLoading: true,
+                        );
                         final downloadUrl = await uploadData(
                             selectedMedia.storagePath, selectedMedia.bytes);
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         if (downloadUrl != null) {
                           setState(() => uploadedFileUrl = downloadUrl);
-                          showUploadMessage(context, 'Success!');
+                          showUploadMessage(
+                            context,
+                            'Success!',
+                          );
                         } else {
-                          showUploadMessage(context, 'Failed to upload media');
+                          showUploadMessage(
+                            context,
+                            'Failed to upload media',
+                          );
                           return;
                         }
                       }

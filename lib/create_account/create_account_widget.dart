@@ -397,41 +397,51 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                               if (val.isEmpty) {
                                 return 'Please enter your email';
                               }
+                                  final usersCreateData = createUsersRecordData(
+                                    email: emailInputController.text,
+                                    displayName:
+                                        displayNameInputController.text,
+                                    photoUrl: uploadedFileUrl,
+                                    uid: '',
+                                    createdTime: getCurrentTimestamp,
+                                    firstName: firstNameInputController.text,
+                                    lastName: lastNameInputController.text,
+                                    dob: datePicked,
+                                    city: cityInputController.text,
+                                    state: stateInputValue,
+                                    bio: bioInputController.text,
+                                  );
+                                  await UsersRecord.collection
+                                      .doc(user.uid)
+                                      .update(usersCreateData);
 
-                              return null;
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
-                          child: TextFormField(
-                            controller: cityInputController,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'City',
-                              labelStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Overpass',
-                                color: FlutterFlowTheme.secondaryColor,
-                              ),
-                              hintText: 'Enter your city...',
-                              hintStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Overpass',
-                                color: FlutterFlowTheme.secondaryColor,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFFDBE2E7),
-                                  width: 2,
+                                  await Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NavBarPage(
+                                          initialPage: 'nearbyCourts'),
+                                    ),
+                                    (r) => false,
+                                  );
+                                },
+                                text: 'Create Account',
+                                options: FFButtonOptions(
+                                  width: 170,
+                                  height: 50,
+                                  color: FlutterFlowTheme.primaryColor,
+                                  textStyle:
+                                      FlutterFlowTheme.subtitle2.override(
+                                    fontFamily: 'Overpass',
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  elevation: 2,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: 8,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),

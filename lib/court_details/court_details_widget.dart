@@ -1,12 +1,16 @@
 import '../backend/backend.dart';
 import '../components/rate_court_widget.dart';
+import '../find_court_copy/find_court_copy_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_video_player.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -98,7 +102,13 @@ class _CourtDetailsWidgetState extends State<CourtDetailsWidget> {
                                         size: 20,
                                       ),
                                       onPressed: () async {
-                                        Navigator.pop(context);
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => NavBarPage(
+                                                initialPage: 'nearbyCourts'),
+                                          ),
+                                        );
                                       },
                                     ),
                                   ),
@@ -120,10 +130,7 @@ class _CourtDetailsWidgetState extends State<CourtDetailsWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  valueOrDefault<String>(
-                                    widget.court.name,
-                                    'Unnamed Court',
-                                  ),
+                                  'Falcons',
                                   style: FlutterFlowTheme.title2,
                                 ),
                                 Column(
@@ -142,12 +149,7 @@ class _CourtDetailsWidgetState extends State<CourtDetailsWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 0, 4, 0),
                                           child: Text(
-                                            valueOrDefault<String>(
-                                              functions.getAverageRating(
-                                                  courtDetailsCommentsRecordList
-                                                      .toList()),
-                                              '-',
-                                            ),
+                                            '7.9',
                                             style: FlutterFlowTheme.title3,
                                           ),
                                         ),
@@ -170,10 +172,7 @@ class _CourtDetailsWidgetState extends State<CourtDetailsWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      valueOrDefault<String>(
-                                        widget.court.description,
-                                        'The best of all 3 worlds, Row & Flow offers high intensity rowing and strength intervals followed by athletic based yoga sure to enhance flexible and clear the mind. Yoga mats are provided but bringing your own yoga mat is highly encouraged.',
-                                      ),
+                                      'A 7-man basketball team based in San Diego, CA. Looking for a new assistant coach.',
                                       style: FlutterFlowTheme.bodyText1,
                                     ),
                                   ),
@@ -443,6 +442,217 @@ class _CourtDetailsWidgetState extends State<CourtDetailsWidget> {
                           ),
                         ),
                       ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                            child: Text(
+                              'Team Drills',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.title2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 1,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                          ),
+                          child: GridView(
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 1,
+                            ),
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                color: Color(0xFFF5F5F5),
+                                child: FlutterFlowVideoPlayer(
+                                  path:
+                                      'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                                  videoType: VideoType.network,
+                                  autoPlay: false,
+                                  looping: true,
+                                  showControls: true,
+                                  allowFullScreen: true,
+                                  allowPlaybackSpeedMenu: false,
+                                ),
+                              ),
+                              Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                color: Color(0xFFF5F5F5),
+                                child: FlutterFlowVideoPlayer(
+                                  path:
+                                      'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                                  videoType: VideoType.network,
+                                  autoPlay: false,
+                                  looping: true,
+                                  showControls: true,
+                                  allowFullScreen: true,
+                                  allowPlaybackSpeedMenu: false,
+                                ),
+                              ),
+                              Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                color: Color(0xFFF5F5F5),
+                                child: FlutterFlowVideoPlayer(
+                                  path:
+                                      'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                                  videoType: VideoType.network,
+                                  autoPlay: false,
+                                  looping: true,
+                                  showControls: true,
+                                  allowFullScreen: true,
+                                  allowPlaybackSpeedMenu: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                            child: Text(
+                              'Team Workouts',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.title2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 1,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEEEEEE),
+                          ),
+                          child: ListView(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          FindCourtCopyWidget(),
+                                    ),
+                                  );
+                                },
+                                child: Slidable(
+                                  actionPane: const SlidableScrollActionPane(),
+                                  secondaryActions: [
+                                    IconSlideAction(
+                                      caption: 'Save',
+                                      color: FlutterFlowTheme.tertiaryColor,
+                                      icon: Icons.save,
+                                      onTap: () {
+                                        print(
+                                            'SlidableActionWidget pressed ...');
+                                      },
+                                    ),
+                                  ],
+                                  child: ListTile(
+                                    title: Text(
+                                      'Crazy Dribble Workout',
+                                      style: FlutterFlowTheme.title3,
+                                    ),
+                                    subtitle: Text(
+                                      'For those that want crazy dribbling skills',
+                                      style: FlutterFlowTheme.subtitle2,
+                                    ),
+                                    trailing: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Color(0xFF303030),
+                                      size: 20,
+                                    ),
+                                    tileColor: Color(0xFFF5F5F5),
+                                    dense: false,
+                                  ),
+                                ),
+                              ),
+                              Slidable(
+                                actionPane: const SlidableScrollActionPane(),
+                                secondaryActions: [
+                                  IconSlideAction(
+                                    caption: 'Share',
+                                    color: Colors.blue,
+                                    icon: Icons.share,
+                                    onTap: () {
+                                      print('SlidableActionWidget pressed ...');
+                                    },
+                                  ),
+                                ],
+                                child: ListTile(
+                                  title: Text(
+                                    'Sniper Shooter',
+                                    style: FlutterFlowTheme.title3,
+                                  ),
+                                  subtitle: Text(
+                                    'For developing consistent shooting ability',
+                                    style: FlutterFlowTheme.subtitle2,
+                                  ),
+                                  trailing: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Color(0xFF303030),
+                                    size: 20,
+                                  ),
+                                  tileColor: Color(0xFFF5F5F5),
+                                  dense: false,
+                                ),
+                              ),
+                              Slidable(
+                                actionPane: const SlidableScrollActionPane(),
+                                secondaryActions: [
+                                  IconSlideAction(
+                                    caption: 'Share',
+                                    color: Colors.blue,
+                                    icon: Icons.share,
+                                    onTap: () {
+                                      print('SlidableActionWidget pressed ...');
+                                    },
+                                  ),
+                                ],
+                                child: ListTile(
+                                  title: Text(
+                                    'Lockdown Defender Training',
+                                    style: FlutterFlowTheme.title3,
+                                  ),
+                                  subtitle: Text(
+                                    'For developing game-winning defensive skills',
+                                    style: FlutterFlowTheme.subtitle2,
+                                  ),
+                                  trailing: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Color(0xFF303030),
+                                    size: 20,
+                                  ),
+                                  tileColor: Color(0xFFF5F5F5),
+                                  dense: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -485,7 +695,7 @@ class _CourtDetailsWidgetState extends State<CourtDetailsWidget> {
                               },
                             );
                           },
-                          text: 'Rate Court',
+                          text: 'Rate Team',
                           icon: Icon(
                             Icons.star_rate_rounded,
                             size: 15,
@@ -511,7 +721,7 @@ class _CourtDetailsWidgetState extends State<CourtDetailsWidget> {
                             await launchURL(
                                 functions.getMapUrl(widget.court.location));
                           },
-                          text: 'Go Play',
+                          text: 'Join Team',
                           icon: Icon(
                             Icons.sports_basketball,
                             size: 15,

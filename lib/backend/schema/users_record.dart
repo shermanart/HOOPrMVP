@@ -28,8 +28,33 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   DateTime get createdTime;
 
   @nullable
-  @BuiltValueField(wireName: 'phone_number')
-  String get phoneNumber;
+  @BuiltValueField(wireName: 'first_name')
+  String get firstName;
+
+  @nullable
+  @BuiltValueField(wireName: 'last_name')
+  String get lastName;
+
+  @nullable
+  DateTime get dob;
+
+  @nullable
+  String get city;
+
+  @nullable
+  String get state;
+
+  @nullable
+  String get bio;
+
+  @nullable
+  BuiltList<DocumentReference> get drills;
+
+  @nullable
+  BuiltList<DocumentReference> get workouts;
+
+  @nullable
+  BuiltList<DocumentReference> get teammates;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -40,7 +65,14 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..displayName = ''
     ..photoUrl = ''
     ..uid = ''
-    ..phoneNumber = '';
+    ..firstName = ''
+    ..lastName = ''
+    ..city = ''
+    ..state = ''
+    ..bio = ''
+    ..drills = ListBuilder()
+    ..workouts = ListBuilder()
+    ..teammates = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -48,6 +80,10 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   static Stream<UsersRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
       .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+
+  static Future<UsersRecord> getDocumentOnce(DocumentReference ref) => ref
+      .get()
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
 
   UsersRecord._();
   factory UsersRecord([void Function(UsersRecordBuilder) updates]) =
@@ -65,7 +101,12 @@ Map<String, dynamic> createUsersRecordData({
   String photoUrl,
   String uid,
   DateTime createdTime,
-  String phoneNumber,
+  String firstName,
+  String lastName,
+  DateTime dob,
+  String city,
+  String state,
+  String bio,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
@@ -75,4 +116,12 @@ Map<String, dynamic> createUsersRecordData({
           ..photoUrl = photoUrl
           ..uid = uid
           ..createdTime = createdTime
-          ..phoneNumber = phoneNumber));
+          ..firstName = firstName
+          ..lastName = lastName
+          ..dob = dob
+          ..city = city
+          ..state = state
+          ..bio = bio
+          ..drills = null
+          ..workouts = null
+          ..teammates = null));

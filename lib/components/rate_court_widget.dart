@@ -51,7 +51,7 @@ class _RateCourtWidgetState extends State<RateCourtWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  'Rate Court',
+                  'Rate Team',
                   style: FlutterFlowTheme.title3,
                 ),
               ],
@@ -114,7 +114,7 @@ class _RateCourtWidgetState extends State<RateCourtWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.court.name,
+                            'Falcons',
                             style: FlutterFlowTheme.title3.override(
                               fontFamily: 'Overpass',
                               color: FlutterFlowTheme.white,
