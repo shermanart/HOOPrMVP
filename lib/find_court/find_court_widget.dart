@@ -1,5 +1,4 @@
-import '../add_court/add_court_widget.dart';
-import '../backend/backend.dart';
+import '../court_details/court_details_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -8,57 +7,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FindCourtWidget extends StatefulWidget {
-  const FindCourtWidget({Key key}) : super(key: key);
+class FindCourtCopyWidget extends StatefulWidget {
+  const FindCourtCopyWidget({Key key}) : super(key: key);
 
   @override
-  _FindCourtWidgetState createState() => _FindCourtWidgetState();
+  _FindCourtCopyWidgetState createState() => _FindCourtCopyWidgetState();
 }
 
-class _FindCourtWidgetState extends State<FindCourtWidget> {
-  LatLng currentUserLocationValue;
+class _FindCourtCopyWidgetState extends State<FindCourtCopyWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<CourtsRecord> algoliaSearchResults1 = [];
-  TextEditingController courtSearchFieldController;
-  List<CourtsRecord> algoliaSearchResults2 = [];
-
-  @override
-  void initState() {
-    super.initState();
-    courtSearchFieldController = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('FloatingActionButton pressed ...');
-        },
-        backgroundColor: FlutterFlowTheme.primaryColor,
-        elevation: 8,
-        child: FlutterFlowIconButton(
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.white,
+        automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
           borderRadius: 30,
           buttonSize: 48,
           icon: Icon(
-            Icons.add,
-            color: Colors.white,
+            Icons.chevron_left_rounded,
+            color: FlutterFlowTheme.darkBG,
             size: 30,
           ),
           onPressed: () async {
             await Navigator.push(
               context,
-              PageTransition(
-                type: PageTransitionType.bottomToTop,
-                duration: Duration(milliseconds: 250),
-                reverseDuration: Duration(milliseconds: 250),
-                child: AddCourtWidget(),
+              MaterialPageRoute(
+                builder: (context) => CourtDetailsWidget(),
               ),
             );
           },
         ),
+        title: Text(
+          'Crazy Dribble Workout',
+          style: FlutterFlowTheme.title3,
+        ),
+        actions: [],
+        centerTitle: false,
+        elevation: 0,
       ),
       body: SafeArea(
         child: Stack(
